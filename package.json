@@ -1,0 +1,16 @@
+{
+  "name": "voyager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "email-validator": "^2.0.4",
+    "katon.io-js-sdk": "^1.1.3",
+    "lodash": "^4.17.21"
+  }
+}
