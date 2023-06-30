@@ -3,21 +3,15 @@ const readline = require("readline");
 const stream = fs.createReadStream("../data/pioneers.csv");
 const rl = readline.createInterface({ input: stream });
 
+require('dotenv').config()
+
 const katon = require('katon.io-js-sdk')
 let data = [];
 
-const LOCAL_PROJECT_ID = 'bfb4550e-a34a-4c55-b280-f8686f04d3c0'
-const SANDBOX_PROJECT_ID = 'd2066642-2642-4a03-a94f-f1bc64084252'
 
-const LOCAL_CREDENTIALS = require('../credentials/katon_rewards_local.credentials.json')
-const SANDBOX_CREDENTIALS = require('../credentials/milkyway_sandbox.credentials.json')
-
-const LOCAL_COIN = 'REWARDS-c2e0ff'
-const SANDBOX_COIN = 'MILKYWAY-20181d'
-
-const PROJECT_ID = SANDBOX_PROJECT_ID
-const CREDENTIALS = SANDBOX_CREDENTIALS
-const COIN = SANDBOX_COIN
+const PROJECT_ID = process.env.PROJECT_ID
+const CREDENTIALS = require(process.env.CREDENTIALS_PATH)
+const COIN = process.env.COIN_ID
 
 const ENV = katon.KatonEnvironments.sandbox
 
@@ -82,7 +76,7 @@ rl.on("close", async () => {
     console.log('Total Success', accounts.length)
     console.log('Total Failures', failedAccountCreation.length)
 
-    fs.writeFileSync(`./credentials/failed_accounts_creations.json`, JSON.stringify(failedAccountCreation))
+    fs.writeFileSync(`./failures/failed_accounts_creations.json`, JSON.stringify(failedAccountCreation))
 
 
     const failedTransfers = [];
@@ -116,7 +110,8 @@ rl.on("close", async () => {
     console.log('Total Success', accounts.length - failedTransfers.length)
     console.log('Total Failures', failedTransfers.length)
 
-    fs.writeFileSync(`./credentials/failed_transfers.json`, JSON.stringify(failedTransfers))
+    fs.writeFileSync(`./failures/failed_transfers.json`, JSON.stringify(failedTransfers))
+
 });
 
 
